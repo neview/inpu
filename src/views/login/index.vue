@@ -138,8 +138,8 @@ export default {
     };
     return {
       loginForm: {
-        username: "admin",
-        password: "111111",
+        username: "",
+        password: "",
       },
       loginRules: {
         username: [
@@ -175,31 +175,34 @@ export default {
       });
     },
     handleLogin() {
-      this.$refs.loginForm.validate((valid) => {
+      // /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/.test(
+      //       this.loginForm.password
+      //     ) ||
+      if (this.loginForm.username && this.loginForm.password) {
         if (
-          this.loginForm.username ||
           /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/.test(
             this.loginForm.password
           ) ||
-          this.loginForm.password.length <= 6
+          this.loginForm.password.length >= 6
         ) {
-          if (valid) {
-            this.loading = true;
-            this.$store
-              .dispatch("user/login", this.loginForm)
-              .then(() => {
-                this.$router.push({ path: this.redirect || "/" });
-                this.loading = false;
-              })
-              .catch(() => {
-                this.loading = false;
-              });
-          } else {
-            console.log("error submit!!");
-            return false;
-          }
+          this.loading = true;
+          this.$store
+            .dispatch("user/login", this.loginForm)
+            .then(() => {
+              this.$router.push({ path: this.redirect || "/" });
+              this.loading = false;
+            })
+            .catch(() => {
+              this.loading = false;
+            });
+        } else {
+          console.log("密码不能为空并且得是6为以上");
+          return false;
         }
-      });
+      }else {
+          console.log("用户名不能为空");
+          return false;
+        }
     },
   },
 };
