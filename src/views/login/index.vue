@@ -176,20 +176,28 @@ export default {
     },
     handleLogin() {
       this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          this.loading = true;
-          this.$store
-            .dispatch("user/login", this.loginForm)
-            .then(() => {
-              this.$router.push({ path: this.redirect || "/" });
-              this.loading = false;
-            })
-            .catch(() => {
-              this.loading = false;
-            });
-        } else {
-          console.log("error submit!!");
-          return false;
+        if (
+          this.loginForm.username ||
+          /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/.test(
+            this.loginForm.password
+          ) ||
+          this.loginForm.password.length >= 6
+        ) {
+          if (valid) {
+            this.loading = true;
+            this.$store
+              .dispatch("user/login", this.loginForm)
+              .then(() => {
+                this.$router.push({ path: this.redirect || "/" });
+                this.loading = false;
+              })
+              .catch(() => {
+                this.loading = false;
+              });
+          } else {
+            console.log("error submit!!");
+            return false;
+          }
         }
       });
     },
@@ -224,7 +232,7 @@ $cursor: #889aa4;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
-      height: 40px;
+      height: 60px;
       caret-color: $cursor;
 
       &:-webkit-autofill {
