@@ -175,9 +175,6 @@ export default {
       });
     },
     handleLogin() {
-      // /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/.test(
-      //       this.loginForm.password
-      //     ) ||
       if (this.loginForm.username && this.loginForm.password) {
         if (
           /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/.test(
