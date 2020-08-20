@@ -181,7 +181,7 @@ export default {
           /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,16}$/.test(
             this.loginForm.password
           ) ||
-          this.loginForm.password.length >= 6
+          this.loginForm.password.length <= 6
         ) {
           if (valid) {
             this.loading = true;
